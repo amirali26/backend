@@ -28,9 +28,8 @@ namespace Api.Database.Models
         public bool PhoneAppointment { get; set; }
         public bool VideoCallAppointment { get; set; }
         public DateTime CreatedAt { get; set; }
-
-        [Column(TypeName = "nvarchar(24)")] public Status Status { get; set; }
-
+        [Column(TypeName = "nvarchar(24)")] 
+        public Status Status { get; set; }
         public Request Request { get; set; }
         public Account Account { get; set; }
         public User User { get; set; }

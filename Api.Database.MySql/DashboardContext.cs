@@ -10,9 +10,9 @@ namespace Api.Database.MySql
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<AccountUserInvitation> AccountUserInvitations { get; set; }
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Request> Requests { get; set; }
-
         public DbSet<Client> Clients { get; set; }
         public DbSet<AreasOfPractice> AreasOfPractice { get; set; }
         public DbSet<Enquiry> Enquiries { get; set; }

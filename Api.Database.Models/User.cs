@@ -11,14 +11,11 @@ namespace Api.Database.Models
     {
         public ICollection<Account> CreatedAccounts { get; set; }
         public ICollection<Enquiry> Enquiries { get; set; }
-
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [GraphQLIgnore]
         public int Id { get; set; }
-
         [GraphQLName("id")] public string ExternalId { get; set; }
-
         public string Name { get; set; }
         public string DateOfBirth { get; set; }
         public string PhoneNumber { get; set; }

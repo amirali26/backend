@@ -44,10 +44,25 @@ namespace Api.Database.MySql.Migrations
                     b.Property<int?>("CreatedById")
                         .HasColumnType("int");
 
+                    b.Property<string>("Email")
+                        .HasColumnType("text");
+
                     b.Property<string>("ExternalId")
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("RegisteredDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<int>("Size")
+                        .HasColumnType("nvarchar(24)");
+
+                    b.Property<string>("Website")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -55,6 +70,33 @@ namespace Api.Database.MySql.Migrations
                     b.HasIndex("CreatedById");
 
                     b.ToTable("Accounts");
+                });
+
+            modelBuilder.Entity("Api.Database.Models.AccountUserInvitation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int?>("AccountId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ExternalId")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("ReferUserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserEmail")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountId");
+
+                    b.HasIndex("ReferUserId");
+
+                    b.ToTable("AccountUserInvitations");
                 });
 
             modelBuilder.Entity("Api.Database.Models.AreasOfPractice", b =>
@@ -274,6 +316,21 @@ namespace Api.Database.MySql.Migrations
                         .HasForeignKey("CreatedById");
 
                     b.Navigation("CreatedBy");
+                });
+
+            modelBuilder.Entity("Api.Database.Models.AccountUserInvitation", b =>
+                {
+                    b.HasOne("Api.Database.Models.Account", "Account")
+                        .WithMany()
+                        .HasForeignKey("AccountId");
+
+                    b.HasOne("Api.Database.Models.User", "ReferUser")
+                        .WithMany()
+                        .HasForeignKey("ReferUserId");
+
+                    b.Navigation("Account");
+
+                    b.Navigation("ReferUser");
                 });
 
             modelBuilder.Entity("Api.Database.Models.AreasOfPractice", b =>

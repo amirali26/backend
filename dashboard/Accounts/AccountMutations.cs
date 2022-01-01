@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Api.Database.Models;
 using Api.Database.MySql;
+using dashboard.AccountUserInvitations;
 using dashboard.context;
 using HotChocolate;
 using HotChocolate.Types;
@@ -15,6 +16,7 @@ namespace dashboard.Accounts
     public class AccountMutations
     {
         public async Task<Account> AddAccount([GlobalState("UserContext")] UserContext userContext,
+            [Service] IAccountUserInvitationService accountUserInvitationService,
             [Service] DashboardContext context, AccountInput accountInput)
         {
             var user = await context.Users.Select(u => u).Where(u => u.ExternalId == userContext.UserId)
@@ -34,9 +36,19 @@ namespace dashboard.Accounts
                 CreatedAt = DateTime.Now,
                 CreatedBy = user,
                 ExternalId = Guid.NewGuid().ToString(),
-                AreasOfPractice = areasOfPractices
+                AreasOfPractice = areasOfPractices,
+                Email = accountInput.Email,
+                PhoneNumber = accountInput.PhoneNumber,
+                Website = accountInput.Website,
+                Size = accountInput.Type,
+                RegisteredDate = accountInput.RegisteredDate,
             };
 
+            accountInput.Users.ForEach(async (u) =>
+            {
+                await accountUserInvitationService.AddAccountUserInvitationService(user, u, account);
+            });
+            
             await context.Accounts.AddAsync(account);
             await context.SaveChangesAsync();
 
