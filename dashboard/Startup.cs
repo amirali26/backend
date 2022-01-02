@@ -74,6 +74,7 @@ namespace dashboard
                 .AddType<RequestQueries>()
                 .AddType<UserQueries>()
                 .AddType<EnquiryQueries>()
+                .AddType<AccountUserInvitationQueries>()
                 .AddMutationType(d => d.Name("Mutation"))
                 .AddType<AccountMutations>()
                 .AddType<UserMutations>()
