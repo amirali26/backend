@@ -81,10 +81,16 @@ namespace Api.Database.MySql.Migrations
                     b.Property<int?>("AccountId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime");
+
                     b.Property<string>("ExternalId")
                         .HasColumnType("text");
 
                     b.Property<int?>("ReferUserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.Property<string>("UserEmail")
@@ -325,7 +331,7 @@ namespace Api.Database.MySql.Migrations
                         .HasForeignKey("AccountId");
 
                     b.HasOne("Api.Database.Models.User", "ReferUser")
-                        .WithMany()
+                        .WithMany("AccountUserInvitations")
                         .HasForeignKey("ReferUserId");
 
                     b.Navigation("Account");
@@ -395,6 +401,8 @@ namespace Api.Database.MySql.Migrations
 
             modelBuilder.Entity("Api.Database.Models.User", b =>
                 {
+                    b.Navigation("AccountUserInvitations");
+
                     b.Navigation("CreatedAccounts");
 
                     b.Navigation("Enquiries");

@@ -43,14 +43,16 @@ namespace dashboard.Accounts
                 Size = accountInput.Type,
                 RegisteredDate = accountInput.RegisteredDate,
             };
-
-            accountInput.Users.ForEach(async (u) =>
+            
+            var accountEntity = (await context.Accounts.AddAsync(account)).Entity;
+            await context.SaveChangesAsync();
+            
+            accountInput.InvitedUserEmails.ForEach(async (u) =>
             {
-                await accountUserInvitationService.AddAccountUserInvitationService(user, u, account);
+                await accountUserInvitationService.AddAccountUserInvitationService(user, u, accountEntity);
             });
             
-            await context.Accounts.AddAsync(account);
-            await context.SaveChangesAsync();
+
 
             return account;
         }

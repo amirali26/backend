@@ -16,7 +16,7 @@ namespace dashboard.AccountUserInvitations
             [GlobalState("UserContext")] UserContext userContext)
         {
             var userEmail = context.Users.Where(u => u.ExternalId == userContext.UserId).First().Email;
-            return context.AccountUserInvitations.Where(a => a.UserEmail == userEmail);
+            return context.AccountUserInvitations.Where(a => a.UserEmail == userEmail && a.Status == 0);
         }
     }
 }

@@ -1,7 +1,9 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Api.Database.Models;
 using Api.Database.MySql;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
 namespace dashboard.AccountUserInvitations
@@ -20,13 +22,20 @@ namespace dashboard.AccountUserInvitations
         
         public async Task<AccountUserInvitation> AddAccountUserInvitationService(User referUser, string userEmail, Account account)
         {
+            // Check if the user already exists in the account
+            var doesUserExist = await context.Accounts.AnyAsync(a => a.Email == account.Email);
+            if (doesUserExist) throw new System.Exception("User already exists for this account");
+            if (referUser.Email == userEmail) throw new Exception("You can not invite yourself to your firm");
+            
             var guid = Guid.NewGuid().ToString();
             var aui = new AccountUserInvitation()
             {
                 Account = account,
                 UserEmail = userEmail,
                 ReferUser = referUser,
-                ExternalId = guid
+                ExternalId = guid,
+                CreatedAt = DateTime.Now,
+                Status = 0,
             };
             
             var accountUserInvitation = await context.AccountUserInvitations.AddAsync(aui);

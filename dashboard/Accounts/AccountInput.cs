@@ -13,6 +13,6 @@ namespace dashboard.Accounts
         public AccountType Type { get; set; }
         public DateTime  RegisteredDate { get; set; }
         public List<string> AreasOfPracticeId { get; set; }
-        public List<string> Users { get; set; }
+        public List<string> InvitedUserEmails { get; set; }
     }
 }
