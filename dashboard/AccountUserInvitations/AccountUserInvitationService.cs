@@ -23,7 +23,8 @@ namespace dashboard.AccountUserInvitations
         public async Task<AccountUserInvitation> AddAccountUserInvitationService(User referUser, string userEmail, Account account)
         {
             // Check if the user already exists in the account
-            var doesUserExist = await context.Accounts.AnyAsync(a => a.Email == account.Email);
+            var doesUserExist = await context.Users.Include(u => u.Accounts).AnyAsync(u =>
+                u.Email == userEmail && u.Accounts.Any(a => a.ExternalId == account.ExternalId));
             if (doesUserExist) throw new System.Exception("User already exists for this account");
             if (referUser.Email == userEmail) throw new Exception("You can not invite yourself to your firm");
             

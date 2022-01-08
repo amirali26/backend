@@ -39,16 +39,6 @@ namespace Api.Database.Models
         [InverseProperty("CreatedAccounts")] 
         public User CreatedBy { get; set; }
         public ICollection<User> Users { get; set; }
+        public ICollection<AccountUserInvitation> AccountUserInvitations { get; set; }
     }
 }
-
-/*
-    London / Large Commercial
-    London / American Firms
-    London / Mid Sized Commercial
-    London / Smaller Commercial
-    Regional Firms
-    General Practice / Small Firms
-    National / Multi-Site Firms
-    Niche Firms
-*/
